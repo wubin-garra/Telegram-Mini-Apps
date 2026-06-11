@@ -73,8 +73,14 @@ export default async function Home({ searchParams }: HomePageProps) {
 
         <section className="section-block">
           <div className="section-heading">
-            <span className="eyebrow">Games</span>
-            <h2>Quick picks</h2>
+            <div className="section-heading__copy">
+              <span className="eyebrow">Games</span>
+              <h2>Quick picks</h2>
+              <p>Start with the fastest entry point, then explore the rest.</p>
+            </div>
+            <Link className="section-heading__link" href="/games">
+              Full catalog
+            </Link>
           </div>
           <div className="game-grid">
             {games.map((game, index) => (

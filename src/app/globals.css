@@ -328,10 +328,38 @@ select {
   line-height: 1;
 }
 
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.section-heading__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.14rem;
+}
+
+.section-heading__copy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.section-heading__link {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .game-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
+}
+
+.page--home .game-card--priority {
+  grid-column: span 2;
 }
 
 .game-card,
@@ -901,6 +929,10 @@ select {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .page--home .game-card--priority {
+    grid-column: span 1;
+  }
 }
 
 @media (max-width: 720px) {
@@ -936,6 +968,11 @@ select {
 
   .hero-panel__copy h1 {
     max-width: 10ch;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .leaderboard-head,
