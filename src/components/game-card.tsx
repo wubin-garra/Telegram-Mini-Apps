@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ArcadeGame } from "@/lib/games";
+import { CopyLinkButton, ShareLinkButton } from "@/components/share-link-button";
 import { Tooltip } from "@/components/tooltip";
 
 type GameCardProps = {
@@ -52,6 +53,14 @@ export function GameCard({ game, priority = false }: GameCardProps) {
         <Link className="button button--primary" href={`/play/${game.slug}`}>
           Play
         </Link>
+        <ShareLinkButton
+          slug={game.slug}
+          title={game.title}
+          challenge={game.challenge}
+          className="button button--ghost button--compact"
+          label="Share"
+        />
+        <CopyLinkButton slug={game.slug} className="button button--ghost button--compact" />
         <Link className="button button--ghost" href={`/games/${game.slug}`}>
           Details
         </Link>

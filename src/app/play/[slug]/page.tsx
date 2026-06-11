@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CopyLinkButton, ShareLinkButton } from "@/components/share-link-button";
 import { Tooltip } from "@/components/tooltip";
 import { games, getGame } from "@/lib/games";
 
@@ -54,6 +55,14 @@ export default async function PlayPage({ params }: PlayPageProps) {
           </div>
         </div>
         <div className="play-header__right">
+          <ShareLinkButton
+            slug={game.slug}
+            title={game.title}
+            challenge={game.challenge}
+            label="Challenge Friend"
+            className="button button--ghost button--compact"
+          />
+          <CopyLinkButton slug={game.slug} className="button button--ghost button--compact" />
           <Link href={`/games/${game.slug}`} className="button button--ghost button--compact">
             Details
           </Link>

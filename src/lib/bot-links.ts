@@ -3,6 +3,12 @@ import { resolveStartParamRoute } from "@/lib/startapp";
 export const telegramBotUsername =
   process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME ?? "";
 
+const gameStartParams = {
+  "turtle-race": "game_turtle",
+  "merge-turtle": "game_merge",
+  "street-basketball": "game_basketball",
+} as const;
+
 export function hasTelegramBotConfig() {
   return telegramBotUsername.length > 0;
 }
@@ -16,22 +22,27 @@ export function buildMainMiniAppLink(startParam?: string) {
 }
 
 export function getGameStartParam(slug: string) {
-  switch (slug) {
-    case "turtle-race":
-      return "game_turtle";
-    case "merge-turtle":
-      return "game_merge";
-    case "street-basketball":
-      return "game_basketball";
-    default:
-      return null;
-  }
+  return gameStartParams[slug as keyof typeof gameStartParams] ?? null;
 }
 
 export function getGameTelegramLink(slug: string) {
   const startParam = getGameStartParam(slug);
   if (!startParam) return null;
   return buildMainMiniAppLink(startParam);
+}
+
+export function buildTelegramShareLink({
+  url,
+  text,
+}: {
+  url: string;
+  text: string;
+}) {
+  return `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+}
+
+export function buildGameShareText(title: string, challenge: string) {
+  return `${title}: ${challenge}`;
 }
 
 export function getBotEntryMap() {

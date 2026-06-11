@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AppNav } from "@/components/app-nav";
+import { CopyLinkButton, ShareLinkButton } from "@/components/share-link-button";
 import { TelegramShell } from "@/components/telegram-shell";
 import { Tooltip } from "@/components/tooltip";
 import { games, getGame } from "@/lib/games";
@@ -90,9 +91,13 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
             <Link className="button button--primary" href={`/play/${game.slug}`}>
               Play now
             </Link>
-            <button className="button button--ghost" type="button">
-              Share soon
-            </button>
+            <ShareLinkButton
+              slug={game.slug}
+              title={game.title}
+              challenge={game.challenge}
+              label="Challenge Friend"
+            />
+            <CopyLinkButton slug={game.slug} />
           </div>
         </section>
 
