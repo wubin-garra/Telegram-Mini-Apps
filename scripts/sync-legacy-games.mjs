@@ -19,6 +19,10 @@ function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
 
+function hasLocalSource() {
+  return fs.existsSync(sourceRoot);
+}
+
 function resetDir(dirPath) {
   fs.rmSync(dirPath, { recursive: true, force: true });
   ensureDir(dirPath);
@@ -113,6 +117,13 @@ function syncStreetBasketball() {
   if (fs.existsSync(legacyNamedHtml)) {
     fs.rmSync(legacyNamedHtml, { force: true });
   }
+}
+
+if (!hasLocalSource()) {
+  console.log(
+    "Skipped legacy game sync: local source project directories are unavailable. Using committed public/legacy-games assets.",
+  );
+  process.exit(0);
 }
 
 resetDir(outputRoot);
