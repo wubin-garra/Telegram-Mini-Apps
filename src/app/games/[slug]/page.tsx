@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AppNav } from "@/components/app-nav";
-import { CopyLinkButton, ShareLinkButton } from "@/components/share-link-button";
 import { TelegramShell } from "@/components/telegram-shell";
 import { Tooltip } from "@/components/tooltip";
 import { games, getGame } from "@/lib/games";
@@ -27,12 +26,6 @@ export async function generateMetadata({ params }: GameDetailPageProps) {
     description: game.description,
   };
 }
-
-const playNotes = [
-  "Short sessions that feel good on mobile.",
-  "Clear score or progression goals every round.",
-  "Easy to send as a challenge link after playing.",
-];
 
 export default async function GameDetailPage({ params }: GameDetailPageProps) {
   const { slug } = await params;
@@ -74,15 +67,11 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
             </div>
             <div className="detail-hero__stats">
               <div>
-                <span>Audience</span>
-                <strong>{game.audience}</strong>
-              </div>
-              <div>
-                <span>Session</span>
+                <span>Time</span>
                 <strong>{game.sessionLength}</strong>
               </div>
               <div>
-                <span>Best for</span>
+                <span>Style</span>
                 <strong>{game.audience}</strong>
               </div>
             </div>
@@ -91,19 +80,12 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
             <Link className="button button--primary" href={`/play/${game.slug}`}>
               Play now
             </Link>
-            <ShareLinkButton
-              slug={game.slug}
-              title={game.title}
-              challenge={game.challenge}
-              label="Challenge Friend"
-            />
-            <CopyLinkButton slug={game.slug} />
           </div>
         </section>
 
         <section className="detail-grid">
           <article className="detail-card">
-            <span className="eyebrow">Why Play</span>
+            <span className="eyebrow">Why It Works</span>
             <h2>{game.currentBest}</h2>
             <p>{game.challenge}</p>
             <div className="game-card__tags">
@@ -116,32 +98,19 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
           </article>
 
           <article className="detail-card">
-            <span className="eyebrow">Quick Notes</span>
-            <h2>How this game fits the arcade</h2>
-            <ol className="detail-list">
-              {playNotes.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ol>
-          </article>
-
-          <article className="detail-card detail-card--wide">
             <span className="eyebrow">
-              More
+              Notes
               <Tooltip
                 label="Build note"
-                content="Developer-facing migration details are intentionally hidden from the main user flow. Keep the surface focused on play."
+                content="The UI stays intentionally light. Deep links handle sharing outside the visible interface."
               />
             </span>
-            <h2>Session snapshot</h2>
-            <p>
-              The best Mini App version of this game keeps loading short, controls obvious,
-              and results easy to share into Telegram chats.
-            </p>
-            <div className="code-panel">
-              <code>game slug: {game.slug}</code>
-              <code>session length: {game.sessionLength}</code>
-              <code>share loop: play → score → challenge</code>
+            <h2>Quick start</h2>
+            <p>Open the game, finish a round, then share its deep link in chat.</p>
+            <div className="detail-note-list">
+              <span>{game.eyebrow}</span>
+              <span>{game.sessionLength}</span>
+              <span>{game.status}</span>
             </div>
           </article>
         </section>

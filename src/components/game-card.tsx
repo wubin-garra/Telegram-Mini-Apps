@@ -1,7 +1,5 @@
 import Link from "next/link";
 import type { ArcadeGame } from "@/lib/games";
-import { CopyLinkButton, ShareLinkButton } from "@/components/share-link-button";
-import { Tooltip } from "@/components/tooltip";
 
 type GameCardProps = {
   game: ArcadeGame;
@@ -20,10 +18,7 @@ export function GameCard({ game, priority = false }: GameCardProps) {
       }
     >
       <div className="game-card__topline">
-        <span className="game-card__eyebrow">
-          {game.eyebrow}
-          <Tooltip label={`${game.title} details`} content={game.tooltip} />
-        </span>
+        <span className="game-card__eyebrow">{game.eyebrow}</span>
         <span className={`game-card__status game-card__status--${game.status}`}>
           {game.status}
         </span>
@@ -38,29 +33,21 @@ export function GameCard({ game, priority = false }: GameCardProps) {
         </div>
       </div>
       <div className="game-card__meta">
-        <span>{game.audience}</span>
         <span>{game.sessionLength}</span>
+        <span>{game.audience}</span>
       </div>
       <div className="game-card__tags">
-        {game.tags.map((tag) => (
+        {game.tags.slice(0, 2).map((tag) => (
           <span key={tag} className="game-card__tag">
             {tag}
           </span>
         ))}
       </div>
-      <p className="game-card__callout">{game.currentBest}</p>
+      <p className="game-card__callout">{game.challenge}</p>
       <div className="game-card__actions">
         <Link className="button button--primary" href={`/play/${game.slug}`}>
           Play
         </Link>
-        <ShareLinkButton
-          slug={game.slug}
-          title={game.title}
-          challenge={game.challenge}
-          className="button button--ghost button--compact"
-          label="Share"
-        />
-        <CopyLinkButton slug={game.slug} className="button button--ghost button--compact" />
         <Link className="button button--ghost" href={`/games/${game.slug}`}>
           Details
         </Link>
