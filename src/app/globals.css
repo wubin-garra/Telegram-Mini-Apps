@@ -287,6 +287,40 @@ select {
   gap: 0.75rem;
 }
 
+.brand-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1.3rem;
+  background:
+    linear-gradient(135deg, rgba(93, 124, 255, 0.08), rgba(49, 181, 255, 0.02)),
+    var(--panel);
+  backdrop-filter: blur(18px);
+  padding: 1rem 1.05rem;
+}
+
+.brand-strip__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.brand-strip__copy h2 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  letter-spacing: -0.05em;
+}
+
+.brand-strip__copy p {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
 .section-heading h2 {
   margin: 0.22rem 0 0;
   font-size: clamp(1.45rem, 2.6vw, 2.2rem);
@@ -861,6 +895,11 @@ select {
   .profile-shell,
   .game-grid {
     grid-template-columns: 1fr;
+  }
+
+  .brand-strip {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 

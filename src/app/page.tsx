@@ -52,6 +52,25 @@ export default async function Home({ searchParams }: HomePageProps) {
           </div>
         </section>
 
+        <section className="brand-strip">
+          <div className="brand-strip__copy">
+            <span className="eyebrow">About AxBlade</span>
+            <h2>Accountable AI, at every layer.</h2>
+            <p>
+              Identity, trusted execution, and accountability infrastructure for
+              the AI agent economy.
+            </p>
+          </div>
+          <a
+            className="button button--ghost"
+            href="https://www.axblade.io/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Visit axblade.io
+          </a>
+        </section>
+
         <section className="section-block">
           <div className="section-heading">
             <span className="eyebrow">Games</span>
