@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AppNav } from "@/components/app-nav";
-import { GameCard } from "@/components/game-card";
 import { TelegramShell } from "@/components/telegram-shell";
 import { featuredGame, games } from "@/lib/games";
 import { resolveStartParamRoute } from "@/lib/startapp";
@@ -29,14 +28,14 @@ export default async function Home({ searchParams }: HomePageProps) {
         <section className="hero-panel">
           <div className="hero-panel__copy">
             <span className="eyebrow">Garra Arcade</span>
-            <h1>Three games. One tap to play.</h1>
-            <p>Fast rounds built for Telegram.</p>
+            <h1>Fast games for Telegram.</h1>
+            <p>Open the lobby, pick a game, and start in seconds.</p>
             <div className="hero-panel__actions">
               <Link className="button button--primary" href={`/play/${featuredGame.slug}`}>
                 Play {featuredGame.title}
               </Link>
               <Link className="button button--ghost" href="/games">
-                See all games
+                Open lobby
               </Link>
             </div>
           </div>
@@ -62,7 +61,7 @@ export default async function Home({ searchParams }: HomePageProps) {
             </p>
           </div>
           <a
-            className="button button--ghost"
+            className="button button--brand"
             href="https://www.axblade.io/"
             target="_blank"
             rel="noreferrer"
@@ -74,17 +73,36 @@ export default async function Home({ searchParams }: HomePageProps) {
         <section className="section-block">
           <div className="section-heading">
             <div className="section-heading__copy">
-              <span className="eyebrow">Games</span>
-              <h2>Quick picks</h2>
-              <p>Start with the fastest entry point, then explore the rest.</p>
+              <span className="eyebrow">Jump In</span>
+              <h2>Quick launch</h2>
+              <p>Use the lobby for full details. Home stays focused on entry.</p>
             </div>
             <Link className="section-heading__link" href="/games">
-              Full catalog
+              View all
             </Link>
           </div>
-          <div className="game-grid">
-            {games.map((game, index) => (
-              <GameCard key={game.slug} game={game} priority={index === 0} />
+          <div className="quick-launch-grid">
+            {games.map((game) => (
+              <Link
+                key={game.slug}
+                href={`/play/${game.slug}`}
+                className="quick-launch-card"
+                style={
+                  {
+                    "--game-accent": game.accent,
+                    "--game-accent-soft": game.accentSoft,
+                  } as React.CSSProperties
+                }
+              >
+                <span className="quick-launch-card__emoji" aria-hidden="true">
+                  {game.emoji}
+                </span>
+                <div className="quick-launch-card__copy">
+                  <strong>{game.title}</strong>
+                  <span>{game.sessionLength}</span>
+                </div>
+                <span className="quick-launch-card__action">Play</span>
+              </Link>
             ))}
           </div>
         </section>

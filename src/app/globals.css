@@ -211,18 +211,18 @@ select {
 
 .hero-panel__copy h1 {
   margin: 0.35rem 0 0.55rem;
-  font-size: clamp(2.4rem, 5vw, 4.2rem);
-  line-height: 0.94;
+  font-size: clamp(1.9rem, 3.8vw, 3rem);
+  line-height: 0.98;
   letter-spacing: -0.08em;
-  max-width: 9ch;
+  max-width: 12ch;
 }
 
 .hero-panel__copy p {
   margin: 0;
-  max-width: 24rem;
+  max-width: 28rem;
   color: var(--muted);
-  font-size: 0.96rem;
-  line-height: 1.55;
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
 .hero-panel__actions,
@@ -321,6 +321,17 @@ select {
   line-height: 1.5;
 }
 
+.button--brand {
+  color: #fff;
+  border-color: rgba(93, 124, 255, 0.4);
+  background:
+    linear-gradient(135deg, rgba(93, 124, 255, 0.22), rgba(49, 181, 255, 0.18)),
+    rgba(10, 16, 28, 0.72);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 10px 24px rgba(49, 181, 255, 0.14);
+}
+
 .section-heading h2 {
   margin: 0.22rem 0 0;
   font-size: clamp(1.45rem, 2.6vw, 2.2rem);
@@ -358,8 +369,56 @@ select {
   gap: 1rem;
 }
 
-.page--home .game-card--priority {
-  grid-column: span 2;
+.quick-launch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.quick-launch-card {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--game-accent) 10%, rgba(13, 18, 30, 0.94)) 0%, var(--panel) 100%);
+  padding: 0.9rem 1rem;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.14);
+}
+
+.quick-launch-card__emoji {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.9rem;
+  font-size: 1.25rem;
+  background: color-mix(in oklab, var(--game-accent) 16%, rgba(255, 255, 255, 0.06));
+}
+
+.quick-launch-card__copy {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.quick-launch-card__copy strong {
+  font-size: 0.98rem;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.quick-launch-card__copy span {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.quick-launch-card__action {
+  color: color-mix(in oklab, var(--game-accent-soft) 80%, white 16%);
+  font-size: 0.82rem;
 }
 
 .game-card,
@@ -921,17 +980,14 @@ select {
   .detail-hero__main,
   .detail-grid,
   .profile-shell,
-  .game-grid {
+  .game-grid,
+  .quick-launch-grid {
     grid-template-columns: 1fr;
   }
 
   .brand-strip {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .page--home .game-card--priority {
-    grid-column: span 1;
   }
 }
 
