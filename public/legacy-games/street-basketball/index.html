@@ -587,24 +587,7 @@ class SoundManager {
     this.bgmTimeout = setTimeout(() => this._playBGMLoop(), loopLen * 1000);
   }
 }
-
-// Override heavyweight audio tracks in the Mini App host build.
-SoundManager.prototype.startBGM = function() {
-  if (!this.bgmEnabled || this.bgmPlaying) return;
-  this.bgmPlaying = true;
-  this.bgmUsingReal = false;
-  this.currentTrackName = 'Synth Arena Mix';
-  if (this.ctx) {
-    this.bgmGain = this.ctx.createGain();
-    this.bgmGain.gain.value = 0.12;
-    this.bgmGain.connect(this.ctx.destination);
-    this._playBGMLoop();
-  }
-};
-SoundManager.prototype._playNextTrack = function() { return; };
-
 const soundManager = new SoundManager();
-
 
 // ─── Polyfill: Phaser Graphics bezierCurveTo ─────────────────────────────────
 // Phaser 3 Graphics doesn't have bezierCurveTo natively; approximate with line segments

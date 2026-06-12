@@ -53,27 +53,19 @@ function copyDirectoryFiltered(fromDir, toDir, predicate) {
   }
 }
 
-function patchStreetBasketballHtml(html) {
-  const override = `
-// Override heavyweight audio tracks in the Mini App host build.
-SoundManager.prototype.startBGM = function() {
-  if (!this.bgmEnabled || this.bgmPlaying) return;
-  this.bgmPlaying = true;
-  this.bgmUsingReal = false;
-  this.currentTrackName = 'Synth Arena Mix';
-  if (this.ctx) {
-    this.bgmGain = this.ctx.createGain();
-    this.bgmGain.gain.value = 0.12;
-    this.bgmGain.connect(this.ctx.destination);
-    this._playBGMLoop();
+function extractStreetBasketballTracks(sourceHtml) {
+  const html = fs.readFileSync(sourceHtml, "utf8");
+  const tracksMatch = html.match(/this\.bgmTracks\s*=\s*\[(.*?)\];/s);
+
+  if (!tracksMatch) {
+    throw new Error("Could not locate basketball BGM track list in source HTML.");
   }
-};
-SoundManager.prototype._playNextTrack = function() { return; };
 
-const soundManager = new SoundManager();
-`;
-
-  return html.replace("const soundManager = new SoundManager();", override);
+  return new Set(
+    Array.from(tracksMatch[1].matchAll(/'([^']+\.mp3)'/g), (match) =>
+      match[1].normalize("NFC"),
+    ),
+  );
 }
 
 function syncTurtleRace() {
@@ -102,16 +94,20 @@ function syncMergeTurtle() {
 function syncStreetBasketball() {
   const sourceDir = path.join(sourceRoot, "street-basketball");
   const targetDir = path.join(outputRoot, "street-basketball");
+  const sourceHtml = path.join(sourceDir, "street-basketball.html");
+  const streetBasketballTracks = extractStreetBasketballTracks(sourceHtml);
 
   copyDirectoryFiltered(sourceDir, targetDir, (filePath, entry) => {
     if (entry.isDirectory()) return false;
     const ext = path.extname(filePath).toLowerCase();
-    return entry.name === "street-basketball.html" || imageExtensions.has(ext);
+    return (
+      entry.name === "street-basketball.html" ||
+      imageExtensions.has(ext) ||
+      streetBasketballTracks.has(entry.name.normalize("NFC"))
+    );
   });
 
-  const sourceHtml = path.join(sourceDir, "street-basketball.html");
-  const html = fs.readFileSync(sourceHtml, "utf8");
-  fs.writeFileSync(path.join(targetDir, "index.html"), patchStreetBasketballHtml(html));
+  copyFile(sourceHtml, path.join(targetDir, "index.html"));
 
   const legacyNamedHtml = path.join(targetDir, "street-basketball.html");
   if (fs.existsSync(legacyNamedHtml)) {
