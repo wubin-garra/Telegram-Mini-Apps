@@ -7,7 +7,7 @@
     "predev": "npm run sync:games",
     "prebuild": "npm run sync:games",
     "dev": "next dev",
-    "build": "next build --webpack",
+    "build": "next build --webpack && node scripts/fix-prebuilt-audio.mjs",
     "start": "next start",
     "lint": "eslint"
   },
